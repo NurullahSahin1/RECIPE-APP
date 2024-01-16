@@ -1,0 +1,371 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap");
+@import "./styles/clear";
+@import "./styles/responsive";
+@import "./styles/loader";
+
+$yellow: #8afb61;
+$white: #f9f5f3;
+$pink: #246f8b;
+
+body {
+  min-height: 100vh;
+  overflow-x: hidden;
+  font-family: "poppins";
+  display: flex;
+  flex-direction: column;
+}
+
+header {
+  display: grid;
+  padding: 0 20px;
+  grid-template-areas: "logo form bookmark";
+  background: $white;
+  // her string bir satırı temsil eder. Her kelime bir sütunu temsil eder. Bütün satırlarda aynı sayıda kelime olması gerekir.
+  @include md {
+    grid-template-areas: "logo bookmark" "form form";
+  }
+  .logo {
+    grid-area: logo;
+    display: flex;
+    align-items: center;
+    img {
+      width: 100px;
+    }
+  }
+  .form {
+    grid-area: form;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    @include md {
+      margin-bottom: 30px;
+    }
+    form {
+      background: white;
+      border-radius: 40px;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      box-shadow: 0 20px 20px -10px rgba(38, 57, 77, 0.3);
+
+      &:focus-within {
+        transform: translateY(-4px);
+        box-shadow: 0 20px 20px -10px rgb(38, 57, 77);
+      }
+      input {
+        font-size: 19px;
+        padding: 8px 16px;
+        @include md {
+          font-size: 16px;
+          padding: 6px 12px;
+        }
+        &::placeholder {
+          color: #dad0cc;
+        }
+      }
+
+      button {
+        border-radius: 40px;
+        padding: 10px 30px;
+        color: white;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.3s;
+        background: linear-gradient((45deg, $yellow 30%, $pink 100%));
+        &:hover {
+          scale: 0.95;
+        }
+      }
+    }
+  }
+  .bookmark {
+    grid-area: bookmark;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    padding: 0 16px;
+    button {
+      background: pink;
+    }
+    i {
+      font-size: 25px;
+      color: white;
+    }
+  }
+}
+
+// main area
+
+main {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  flex: 1;
+  @include lg {
+    grid-template-columns: 1fr;
+  }
+}
+
+section {
+  height: 100%;
+}
+
+// result area
+
+main #results {
+  display: flex;
+  flex-direction: column;
+  height: 150vh;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  a {
+    background: white;
+    border-top: 2px solid #f9f5f3;
+    padding: 20px 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    &:hover {
+      transform: translateY(-2px);
+      background: #f9f5f3;
+    }
+    img {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+    }
+    h4 {
+      color: yellow;
+      white-space: nowrap;
+    }
+  }
+  &::-webkit-scrollbar {
+    background: white;
+    width: 5px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: yellow;
+  }
+}
+
+// recipe
+
+main #recipe {
+  background: #f9f5f3;
+}
+
+#recipe figure {
+  height: 300px;
+  position: relative;
+  background: #a9c9ff;
+  z-index: 1000;
+
+  // resmin üzerine renk geçişi eklemek
+  &::before {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    opacity: 0.4;
+    background-image: linear-gradient(90deg, #a9c9ff 0%, #ffbbec 100%);
+  }
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  h1 {
+    font-family: "ubuntu";
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%, 20%) skewY(-6deg);
+    color: #fff;
+    font-weight: 600;
+    background-image: linear-gradient(90deg, #a9c9ff 0%, #ffbbec 100%);
+    white-space: nowrap;
+    padding: 10px 30px;
+    text-shadow: 0 0 10px rgba(0, 0, 0, 0.358);
+  }
+  .like-area {
+    display: flex;
+    justify-content: end;
+    padding: 30px;
+    i {
+      font-size: 26px;
+      padding: 5px;
+      cursor: pointer;
+      border-radius: 10px;
+      transition: all 300ms;
+      &:hover {
+        background: rgb(173, 173, 173);
+      }
+    }
+  }
+}
+
+// tarif detay içerik alanı
+#recipe .ingredients {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 40px;
+  margin: 40px 0 0;
+
+  ul {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    row-gap: 20px;
+    column-gap: 40px;
+
+    @include md {
+      grid-template-columns: 1fr;
+    }
+    li {
+      display: flex;
+      gap: 10px;
+      i {
+        color: #a9c9ff;
+      }
+      p {
+        white-space: nowrap;
+        max-width: 290px;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        @include sm {
+          max-width: 300px;
+        }
+        @include md {
+          max-width: 450px;
+        }
+      }
+    }
+  }
+}
+
+// tarif detay > yönerge
+
+#recipe .directions {
+  text-align: center;
+  padding-bottom: 40px;
+  h2 {
+    font-family: 30px;
+    transform: skewY(-3deg);
+    font-weight: 600;
+    text-shadow: 0 0 30px #ffbbec;
+    color: #ffbbec;
+  }
+  p {
+    margin: 20px 0;
+    padding: 5px;
+    span {
+      color: #ffbbec;
+    }
+  }
+  a {
+    padding: 10px 30px;
+    border: 1px solid #a9c9ff;
+    border-radius: 30px;
+    transition: all 300ms;
+    &:hover {
+      background: #a9c9ff;
+      color: white;
+    }
+  }
+}
+
+// like alanı
+
+.bm-area {
+  position: relative;
+  display: block;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+.bm-button {
+  cursor: pointer;
+}
+
+.dropdown {
+  display: none;
+  font-size: 13px;
+  position: absolute;
+  overflow: hidden;
+  left: -155px;
+  z-index: 1;
+  min-width: 200px;
+  background: #212121;
+  border: 2px solid #f9a9cc;
+  border-radius: 15px 0 15px 15px;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+.dropdown a {
+  color: #f9a9cc;
+  padding: 8px 10px;
+  font-size: 16px;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: all 0.2s;
+  img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+  }
+}
+
+// button hoverlanırsa dropdownu göster
+.bm-area:hover .dropdown {
+  display: block;
+}
+.bm-area:hover button {
+  border-radius: 13px 13px 0 0;
+}
+
+.dropdown a:hover {
+  color: black;
+  background: #f9a9cc;
+}
+
+// sepet
+main #cart {
+  div {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    h2 {
+      color: #a9c9ff;
+      text-shadow: 0 0 10px rgba(0, 0, 0, 0.14);
+    }
+    button {
+      background: red;
+      color: white;
+      cursor: pointer;
+      transition: filter 0.3s;
+      &:hover {
+        filter: brightness(70%);
+      }
+    }
+  }
+
+  ul {
+    max-width: 90vh;
+    overflow-y: auto;
+    &::-webkit-scrollbar {
+      width: 6px;
+    }
+    &::-webkit-scrollbar-thumb {
+      background: black;
+    }
+    i {
+      cursor: pointer;
+      font-size: 20px;
+      &:hover {
+        color: red;
+        background: rgba(128, 128, 128, 0.343);
+        border-radius: 4px;
+      }
+    }
+  }
+}
